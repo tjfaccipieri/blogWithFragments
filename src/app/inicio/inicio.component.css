@@ -1,0 +1,23 @@
+.blog {
+  font-size: 4.275rem;
+  color: #BEC4D4;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  font-weight: 900;
+  font-family: 'Exo', sans-serif;
+}
+
+.topo {
+  display: block;
+  background: #465664;
+  width: 100px;
+  position: fixed;
+  right: 15px;
+  bottom: 5px;
+  text-align: center;
+  padding: .5rem;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}

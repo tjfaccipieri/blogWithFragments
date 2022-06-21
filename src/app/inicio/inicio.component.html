@@ -1,0 +1,127 @@
+<div class="container-fluid bginicio">
+  <div class="container" id='menu'>
+    <div class="row d-flex align-items-center">
+      <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+        <h2 class="text-light text-center">Bem vindo ao meu <span class='blog'>blog pessoal</span></h2>
+        <p class="text-light">Publique aqui o que você quiser...é noiz</p>
+
+        <div class="d-flex justify-content-around w-75">
+          <button class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal">Nova Postagem</button>
+          <a class="btn btn-light" [routerLink]="['/inicio']" fragment='postagens'>Ver Postagens</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <img src="https://i.imgur.com/wUf1NUF.png" alt="" class='img-fluid' />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5" id='postagens'>
+  <ul class="nav nav-tabs d-flex justify-content-center text-dark" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active text-dark" id="todasPostagens-tab" data-toggle="tab" href="#todasPostagens" role="tab" aria-controls="todasPostagens" aria-selected="true">Todas Postagens</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link text-dark" id="minhasPostagens-tab" data-toggle="tab" href="#minhasPostagens" role="tab" aria-controls="minhasPostagens" aria-selected="false" (click)="buscarUsuario()">Minhas Postagens</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link text-dark" id="postagemTema-tab" data-toggle="tab" href="#postagemTema" role="tab" aria-controls="postagemTema" aria-selected="false">Postagens por Tema</a>
+    </li>
+  </ul>
+  
+  
+  <!-- !começo das postagens -->
+  <div class="tab-content mt-3" id="myTabContent">
+    
+    <!-- ! Todas as postagens -->
+    <div class="tab-pane fade show active" id="todasPostagens" role="tabpanel" aria-labelledby="todasPostagens-tab">
+      <div class="d-flex flex-wrap">
+        <div class="card text-center m-3" style="width: 15.275rem;" *ngFor="let postagem of listaPostagens">
+          <div class="card-body">
+            <h5 class="card-title">{{postagem.titulo}}</h5>
+            <p class="card-text">{{postagem.texto}}</p>
+            
+            <p>{{postagem.data | date:'dd/MM/yyyy'}} às {{postagem.data | date:'HH:mm'}}</p>
+            
+            <p>Tema: {{postagem.tema.descricao}}</p>
+            <p>{{postagem.usuario.nome}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ! Todas as postagens -->
+
+    <!--  * Minhas postagens -->
+    <div class="tab-pane fade" id="minhasPostagens" role="tabpanel" aria-labelledby="minhasPostagens-tab">
+      <div class="d-flex flex-wrap">
+        <div class="card text-center m-3" style="width: 15.275rem;" *ngFor="let postagem of usuario.postagem">
+          <div class="card-body">
+            <h5 class="card-title">{{postagem.titulo}}</h5>
+            <p class="card-text">{{postagem.texto}}</p>
+            
+            <p>{{postagem.data | date:'dd/MM/yyyy'}} às {{postagem.data | date:'HH:mm'}}</p>
+            
+            <p>Tema: {{postagem.tema.descricao}}</p>
+            <p>{{usuario.nome}}</p>
+
+            <div class='d-flex justify-content-around'>
+              <button class='btn btn-outline-info' [routerLink]="['/postagemedit', postagem.id]">Editar</button>
+              <button class='btn btn-outline-danger'>Apagar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  * Minhas postagens -->
+
+    <div class="tab-pane fade" id="postagemTema" role="tabpanel" aria-labelledby="postagemTema-tab">postagens por tema</div>
+  </div>
+</div>
+
+
+
+
+<!-- ?Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">Nova Postagem</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Digite o título" [(ngModel)]="postagem.titulo">
+        </div>
+
+        <div class="form-group">
+          <label for="texto">Texto</label>
+          <textarea class="form-control" name="texto" id="texto" rows="3" [(ngModel)]="postagem.texto"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="texto">Escolha um tema ou <a routerLink="/temas" data-dismiss="modal">cadastre um novo</a>: </label>
+          <select name="tema" id="tema" class="form-control" (change)="buscarTemaPorId()" [(ngModel)]="idTema">
+            <option *ngFor="let tema of listaTemas" value="{{tema.id}}">{{tema.descricao}}</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="publicar()" data-dismiss="modal">Publicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- !botão de ir pro topo -->
+<div class='topo' [routerLink]="['/inicio']" fragment='menu'>
+  <span>Ir ao topo</span>
+</div>

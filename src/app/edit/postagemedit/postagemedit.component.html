@@ -1,0 +1,25 @@
+<h1>Editar postagem</h1>
+
+<form>
+  <div class="form-group">
+    <label for="titulo">Título</label>
+    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Digite o título" [(ngModel)]="postagem.titulo">
+  </div>
+
+  <div class="form-group">
+    <label for="texto">Texto</label>
+    <textarea class="form-control" name="texto" id="texto" rows="3" [(ngModel)]="postagem.texto"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="texto">Escolha um tema </label>
+    <select name="tema" id="tema" class="form-control" (change)="buscarTemaPorId()" [(ngModel)]="idTema">
+      <option *ngFor="let tema of listaTemas" value="{{tema.id}}">{{tema.descricao}}</option>
+    </select>
+  </div>
+
+  <div class='d-flex justify-content-around w-50'>
+    <button class="btn btn-outline-danger" routerLink="/inicio">Cancelar</button>
+    <button class="btn btn-outline-info" (click)="editarPostagem()">Editar</button>
+  </div>
+</form>
